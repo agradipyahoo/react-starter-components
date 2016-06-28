@@ -4,7 +4,7 @@
 
 
 import React, {Component, PropTypes} from "react";
-import Child from './components/Child/Child'
+import Child, {Child2} from './components/Child'
 import emptyFunction from 'fbjs/lib/emptyFunction';
 
 const context = {
@@ -12,8 +12,22 @@ const context = {
     onSetTitle: value => (document.title = value),
 }
 
+let counter = 100
+
 class App extends Component {
 
+    constructor(){
+        super(...arguments);
+        this.state = {
+            value1:counter
+        }
+    }
+
+    onClickMe(){
+        this.setState({
+            value1:counter++
+        })
+    }
 
     getChildContext() {
         const context = this.props.context;
@@ -24,7 +38,25 @@ class App extends Component {
     }
 
     render() {
-        return <div>This is React App <br/><Child view="create" text="My React App"/></div>
+
+        return <div>
+            <Child2 />
+            This is React App
+
+            <div>
+                <div>asdfa
+                    <div>asdfasdf
+                        <div>
+                            Some where deep down
+                            <Child key1={this.state.value1} />
+                        </div></div></div>
+            </div>
+
+
+            <Child2 />
+
+            <div className="clickMe" onClick={this.onClickMe.bind(this)}>ClickMe update value1</div>
+        </div>
     }
 
 

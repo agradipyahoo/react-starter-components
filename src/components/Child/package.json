@@ -2,5 +2,5 @@
   "name": "Child",
   "version": "0.0.0",
   "private": true,
-  "main": "./Child.js"
+  "main": "./index.js"
 }
