@@ -6,6 +6,7 @@ import React, {Component} from "react";
 import dataLoader from './dataLoader';
 import Loader from './Loader';
 import {identity} from './utils';
+import watcher from './watcher';
 
 class SmartWrapper extends Component {
 
@@ -29,8 +30,9 @@ class SmartWrapper extends Component {
                 // this.loadStore(storeConfig.propKey, storeConfig.store, getParams.call(this, storeConfig), true)
             }
         }
-
     }
+
+
 
     addRequest(propName, requestId, payload){
         var self = this;

@@ -8,10 +8,9 @@ import Child from './components/Child'
 import NameList from './components/NameList'
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import dataSourceConfigs from './requests';
-import {dataLoader, SmartWrapper, SimpleStore} from './core';
+import {dataLoader, SmartWrapper, SimpleStore, watcher} from './core';
 import {Form, TextInput, Select} from './components/Form';
 import {List, FormCollection} from './components/common';
-
 
 
 
@@ -23,8 +22,6 @@ const context = {
     insertCss: styles => styles._insertCss(),
     onSetTitle: value => (document.title = value),
 }
-
-
 
 
 class App extends Component {
@@ -56,6 +53,11 @@ class App extends Component {
             }]
         }
 
+        watcher.set({'app.child.text':'Ravi <Kumar HA'})
+        setTimeout(function(){
+            watcher.set({'app.child.text':'Ravi <Kumar HA after timeout'})
+        },1000)
+
 
         return <div>This is React App <br/>
             <SmartWrapper {...childSmartConfig}>
@@ -63,12 +65,12 @@ class App extends Component {
             </SmartWrapper>
 
 
-
             <div className="container">
                 <Form>
                     <TextInput name="something" defaultValue="default value from attribute"/>
                     <SmartWrapper {...selectSmartConfig}>
-                        <Select  name="otherthing" label="Enter Other thing" placeholder="This is placeholder" defaultValue={'2'}/>
+                        <Select name="otherthing" label="Enter Other thing" placeholder="This is placeholder"
+                                defaultValue={'2'}/>
                     </SmartWrapper>
 
                 </Form>
@@ -78,7 +80,9 @@ class App extends Component {
                 <Form valueStore={new SimpleStore({otherthing2:'default value from value store'})}>
                     <div>
                         <span>
-                            <TextInput name="otherthing2" label="Enter Other thing -- 2" placeholder="This is placeholder" helperText="We will never share your email with anyone else."/>
+                            <TextInput name="otherthing2" label="Enter Other thing -- 2"
+                                       placeholder="This is placeholder"
+                                       helperText="We will never share your email with anyone else."/>
                         </span>
                     </div>
                 </Form>
@@ -95,7 +99,7 @@ class App extends Component {
                 </FormCollection>
             </div>
 
-            <Child view="create" text="My React App"/>
+            <Child view="create" text="My React App" outputs={{'text':'app.child.text'}}/>
         </div>
     }
 
